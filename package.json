@@ -1,0 +1,11 @@
+{
+  "name": "blog-list",
+  "version": "0.0.1",
+  "description": "blog list api",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Shahid Sarker",
+  "license": "MIT"
+}
