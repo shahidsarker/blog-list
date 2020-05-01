@@ -20,6 +20,15 @@ const initialBlogs = [
   },
 ];
 
+beforeEach(async () => {
+  await Blog.deleteMany({});
+
+  for (let blog of initialBlogs) {
+    let blogObject = new Blog(blog);
+    await blogObject.save();
+  }
+});
+
 test("blogs are returned as json", async () => {
   await api
     .get("/api/blogs")
