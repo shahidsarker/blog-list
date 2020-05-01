@@ -24,4 +24,7 @@ const favoriteBlog = (blogs) => {
   return blogs[max];
 };
 
-module.exports = { totalLikes, favoriteBlog };
+const mostBlogs = (blogs) => {};
+const mostLikes = (blogs) => {};
+
+module.exports = { totalLikes, favoriteBlog, mostBlogs, mostLikes };

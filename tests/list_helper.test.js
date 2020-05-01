@@ -95,3 +95,10 @@ describe("favorite blog", () => {
     expect(result).toEqual(listWithManyBlogs[2]);
   });
 });
+
+describe("most blogs", () => {
+  test.todo("most blogs");
+});
+describe("most likes", () => {
+  test.todo("most likes");
+});
