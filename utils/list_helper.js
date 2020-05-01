@@ -1,5 +1,3 @@
-const dummy = (blogs) => {};
-
 /**
  * gets totalLikes
  * @param {object[]} blogs blogs to parse
@@ -10,4 +8,20 @@ const totalLikes = (blogs) => {
   return blogs.length === 0 ? 0 : blogs.reduce(reducer, 0);
 };
 
-module.exports = { dummy, totalLikes };
+/**
+ * Returns blog with most likes
+ * @param {object[]} blogs list blogs to parse
+ */
+const favoriteBlog = (blogs) => {
+  if (!blogs.length) return null;
+  let max = 0;
+  for (let i = 1; i < blogs.length; i++) {
+    if (blogs[i].likes > blogs[max].likes) {
+      max = i;
+    }
+  }
+
+  return blogs[max];
+};
+
+module.exports = { totalLikes, favoriteBlog };
