@@ -87,7 +87,7 @@ test("a blog missing likes property defaults to 0", async () => {
   };
   await api
     .post("/api/blogs")
-    .send(newBlog)
+    .send(blogMissingLikes)
     .expect(201)
     .expect("Content-Type", /application\/json/);
 
