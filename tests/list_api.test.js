@@ -5,22 +5,6 @@ const app = require("../app");
 const api = supertest(app);
 const Blog = require("../models/blog");
 
-// const initialBlogs = [
-//   {
-//     title: "React patterns",
-//     author: "Michael Chan",
-//     url: "https://reactpatterns.com/",
-//     likes: 7,
-//   },
-//   {
-//     title: "Go To Statement Considered Harmful",
-//     author: "Edsger W. Dijkstra",
-//     url:
-//       "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html",
-//     likes: 5,
-//   },
-// ];
-
 beforeEach(async () => {
   await Blog.deleteMany({});
 
@@ -94,6 +78,18 @@ test("a blog missing likes property defaults to 0", async () => {
   const blogsAtEnd = await helper.blogsInDb();
   const latestBlog = blogsAtEnd[blogsAtEnd.length - 1];
   expect(latestBlog.likes).toEqual(0);
+});
+
+test("blog missing title and url results in error", async () => {
+  const blogsAtStart = await helper.blogsInDb();
+  const incompleteBlog = {
+    author: "Robert C. Martin",
+    likes: 0,
+  };
+
+  await api.post("/api/blogs").send(incompleteBlog).expect(400);
+  const blogsAtEnd = await helper.blogsInDb();
+  expect(blogsAtEnd).toHaveLength(blogsAtStart.length);
 });
 
 afterAll(() => {
