@@ -1,0 +1,6 @@
+PUT http://localhost:3003/api/blogs/5eac78a8ff80a29c9da58dcf
+Content-Type: application/json
+
+{
+  "likes":3
+}
