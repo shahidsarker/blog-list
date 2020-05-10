@@ -190,6 +190,28 @@ describe("when there is initially one user in db", () => {
     const usersAtEnd = await helper.usersInDb();
     expect(usersAtEnd).toHaveLength(usersAtStart.length);
   });
+  test("creation fails with password shorter than 3 characters", async () => {
+    const usersAtStart = await helper.usersInDb();
+
+    const newUser = {
+      username: "goodbye",
+      name: "hello world",
+      password: "hi",
+    };
+
+    const result = await api
+      .post("/api/users")
+      .send(newUser)
+      .expect(403)
+      .expect("Content-Type", /application\/json/);
+
+    expect(result.body.error).toContain(
+      "password must be at least 3 characters"
+    );
+
+    const usersAtEnd = await helper.usersInDb();
+    expect(usersAtEnd).toHaveLength(usersAtStart.length);
+  });
 });
 
 afterAll(() => {
