@@ -1,3 +1,5 @@
+const _ = require("lodash");
+
 /**
  * gets totalLikes
  * @param {object[]} blogs blogs to parse
@@ -24,7 +26,33 @@ const favoriteBlog = (blogs) => {
   return blogs[max];
 };
 
-const mostBlogs = (blogs) => {};
-const mostLikes = (blogs) => {};
+const mostBlogs = (blogs) => {
+  let max = null;
+  const count = {};
+  _.forEach(blogs, (blog) => {
+    const { author } = blog;
+    if (!count[author]) count[author] = 0;
+
+    count[author]++;
+    if (count[author] > count[max] || !max) max = author;
+  });
+
+  return max !== null ? { author: max, blogs: count[max] } : null;
+};
+
+const mostLikes = (blogs) => {
+  let max = null;
+
+  const count = {};
+
+  _.forEach(blogs, (blog) => {
+    const { author, likes } = blog;
+    if (!count[author]) count[author] = 0;
+    if (likes) count[author] += likes;
+    if (count[author] > count[max] || !max) max = author;
+  });
+
+  return max !== null ? { author: max, likes: count[max] } : null;
+};
 
 module.exports = { totalLikes, favoriteBlog, mostBlogs, mostLikes };
