@@ -97,7 +97,11 @@ describe("favorite blog", () => {
 });
 
 describe("most blogs", () => {
-  test.todo("most blogs");
+  const result = listHelper.mostBlogs(listWithManyBlogs);
+  expect(result).toEqual({
+    author: "Robert C. Martin",
+    blogs: 3,
+  });
 });
 describe("most likes", () => {
   test.todo("most likes");
