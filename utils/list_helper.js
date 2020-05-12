@@ -30,11 +30,11 @@ const mostBlogs = (blogs) => {
   let max = null;
   const count = {};
   _.forEach(blogs, (blog) => {
-    // const { author } = blog;
-    if (!count[blog["author"]]) count[blog["author"]] = 0;
+    const { author } = blog;
+    if (!count[author]) count[author] = 0;
 
-    count[blog["author"]]++;
-    if (count[blog["author"]] > count[max] || !max) max = blog["author"];
+    count[author]++;
+    if (count[author] > count[max] || !max) max = author;
   });
 
   return max !== null ? { author: max, blogs: count[max] } : null;
@@ -46,9 +46,10 @@ const mostLikes = (blogs) => {
   const count = {};
 
   _.forEach(blogs, (blog) => {
-    if (!count[blog["author"]]) count[blog["author"]] = 0;
-    if (blog["likes"]) count[blog["author"]] += blog["likes"];
-    if (count[blog["author"]] > count[max] || !max) max = blog["author"];
+    const { author, likes } = blog;
+    if (!count[author]) count[author] = 0;
+    if (likes) count[author] += likes;
+    if (count[author] > count[max] || !max) max = author;
   });
 
   return max !== null ? { author: max, likes: count[max] } : null;
