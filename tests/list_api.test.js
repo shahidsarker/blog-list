@@ -66,7 +66,6 @@ describe("create blogs associated with user", () => {
       author: "Edsger W. Dijkstra",
       url: "http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html",
       likes: 12,
-      // user: rootUser.id,
     };
 
     await api
@@ -81,6 +80,24 @@ describe("create blogs associated with user", () => {
 
     const title = blogsAtEnd.map((r) => r.title);
     expect(title).toContain("Canonical string reduction");
+  });
+
+  test("a valid blog cannot be added without token", async () => {
+    const newBlog = {
+      title: "Canonical string reduction",
+      author: "Edsger W. Dijkstra",
+      url: "http://www.cs.utexas.edu/~EWD/transcriptions/EWD08xx/EWD808.html",
+      likes: 12,
+    };
+
+    await api
+      .post("/api/blogs")
+      .send(newBlog)
+      .expect(401)
+      .expect("Content-Type", /application\/json/);
+
+    const blogsAtEnd = await helper.blogsInDb();
+    expect(blogsAtEnd).toHaveLength(helper.initialBlogs.length);
   });
 
   test("a blog missing likes property defaults to 0", async () => {
