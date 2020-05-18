@@ -56,6 +56,11 @@ blogsRouter.delete("/:id", async (req, res) => {
 blogsRouter.put("/:id", async (req, res) => {
   const body = req.body;
 
+  const decodedToken = jwt.verify(req.token, process.env.SECRET);
+  if (!req.token || !decodedToken.id) {
+    return res.status(401).json({ error: "token missing or invalid" });
+  }
+
   const blog = {
     likes: body.likes,
   };
